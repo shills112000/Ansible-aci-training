@@ -1,0 +1,24 @@
+---
+- name: Tenant Creation
+  hosts: sim
+  gather_facts: no
+  vars_files: vars/extra_vars.yml
+
+  roles:
+    - role: new_tenant
+    - role: new_ap
+      when:
+        - output_tenant.current == []
+        - aci_state == 'present'
+    - role: new_bd
+      when:
+        - output_tenant.current == []
+        - aci_state == 'present'
+    - role: new_vrf
+      when:
+        - output_tenant.current == []
+        - aci_state == 'present'
+    - role: new_epg
+      when:
+        - output_tenant.current == []
+        - aci_state == 'present'

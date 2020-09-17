@@ -1,0 +1,15 @@
+---
+- name: Add a new VRF
+  aci_vrf:
+    host: "{{aci_host}}"
+    username: "{{aci_username}}"
+    password: "{{aci_password}}"
+    port: "{{aci_port}}"
+    validate_certs: "{{aci_validate_certs}}"
+    vrf: vrf_{{aci_vrf_name}}
+    tenant: "{{aci_tenant}}"
+    descr: Lab VRF
+    policy_control_preference: enforced
+    policy_control_direction: ingress
+    state: "{{aci_state}}"
+  delegate_to: localhost

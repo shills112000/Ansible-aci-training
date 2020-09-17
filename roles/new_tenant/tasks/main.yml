@@ -1,0 +1,60 @@
+---
+- name: Query Tenant
+  aci_tenant:
+    host: "{{aci_host}}"
+    username: "{{aci_username}}"
+    password: "{{aci_password}}"
+    validate_certs: "{{aci_validate_certs}}"
+    port: "{{aci_port}}"
+    tenant: "{{aci_tenant}}"
+    description: Prod Tenant SimonH
+    state: query
+  delegate_to: localhost
+  register: output_tenant
+
+- name: Debug of output tenant
+  debug:
+  #  msg: "{{output_tenant.current[0].fvTenant.attributes.name}}"
+    msg: "{{output_tenant.current}}"
+
+### THIS gives a list
+# - name: Debug of output
+#     debug:
+#       msg: "{{output_tenant.current[:] | map(attribute='fvTenant.attributes.dn') | list }}"
+- name: fail tentant task
+  fail:
+    msg: "Tenant Found {{output_tenant.current[0].fvTenant.attributes.name}}" 
+  when:
+    - output_tenant.current != []
+    - aci_state == 'present'
+
+- name: Add a new Tenant
+  aci_tenant:
+    host: "{{aci_host}}"
+    username: "{{aci_username}}"
+    password: "{{aci_password}}"
+    validate_certs: "{{aci_validate_certs}}"
+    port: "{{aci_port}}"
+    tenant: "{{aci_tenant}}"
+    description: Prod Tenant SimonH
+    state: "{{aci_state}}"
+  delegate_to: localhost
+  when:
+    - output_tenant.current == []
+    - aci_state == 'present'
+  # when out_tenant id [] eg does not exit create it.
+
+- name: Delete a Tenant
+  aci_tenant:
+    host: "{{aci_host}}"
+    username: "{{aci_username}}"
+    password: "{{aci_password}}"
+    validate_certs: "{{aci_validate_certs}}"
+    port: "{{aci_port}}"
+    tenant: "{{aci_tenant}}"
+    description: Prod Tenant SimonH
+    state: "{{aci_state}}"
+  delegate_to: localhost
+  when:
+    - aci_state == 'absent'
+  # when out_tenant id [] eg does not exit create it.

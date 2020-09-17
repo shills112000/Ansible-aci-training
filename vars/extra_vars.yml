@@ -1,0 +1,23 @@
+---
+  aci_username: daisy
+  aci_password: daisyTraining2020
+  aci_validate_certs: no
+  aci_port: 44043
+  aci_validate_certstenant: SimonH
+  aci_state: present
+  aci_tenant: SHILLS-DAYZ-BL
+  aci_host: 136.243.121.177
+  aci_ap_name: SIMONH_AP_TEST
+  aci_vrf_name : SIMON_VRF
+  aci_bd_name: SIMON_BD
+  epg_name: SIMON_EPG
+  ap_applications:
+    - WEB
+    - DB
+    - APP
+  bd_names:
+    - SIMON1
+    - SIMON2
+  aci_epg:
+    - SIMON_EPG1
+    - SIMON_EPG2

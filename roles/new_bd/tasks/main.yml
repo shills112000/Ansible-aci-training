@@ -1,0 +1,13 @@
+- name: Add Bridge Domain
+  aci_bd:
+    host: "{{aci_host}}"
+    username: "{{aci_username}}"
+    password: "{{aci_password}}"
+    port: "{{aci_port}}"
+    validate_certs: "{{aci_validate_certs}}"
+    tenant: "{{aci_tenant}}"
+    bd: "{{item}}"
+    vrf: vrf_{{aci_vrf_name}}
+    state: "{{aci_state}}"
+  delegate_to: localhost
+  loop: "{{bd_names}}"

@@ -1,0 +1,19 @@
+- name: Add a new EPG
+  aci_epg:
+    host: "{{aci_host}}"
+    username: "{{aci_username}}"
+    password: "{{aci_password}}"
+    port: "{{aci_port}}"
+    validate_certs: "{{aci_validate_certs}}"
+    tenant: "{{aci_tenant}}"
+    ap: "{{item.2}}"
+    epg: epg_{{item.1}}
+    description: Web Intranet EPG
+    bd:  bd_{{item.0}}
+    preferred_group: yes
+    state: "{{aci_state}}"
+  delegate_to: localhost
+  with_nested:
+    - "{{bd_names}}"
+    - "{{aci_epg}}"
+    - "{{ap_applications}}"

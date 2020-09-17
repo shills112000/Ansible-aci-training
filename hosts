@@ -1,0 +1,6 @@
+[metsi_sim]
+sim ansible_host=136.243.121.177
+
+[metsi_sim:vars]
+ansible_user=daisy
+ansible_password=daisyTraining2020
